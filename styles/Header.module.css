@@ -1,0 +1,51 @@
+.navBar{
+    display: flex;
+    height: 7.5vh;
+    min-height: 40px;
+    background-color: navy;
+    align-items: center;
+}
+
+.logo{
+    font-size: 40px;
+    padding-left: 5%;
+}
+
+.menuButton{
+    padding-right: 5%;
+    cursor: pointer;
+}
+
+.dropDownMenu{
+    position: absolute;
+    background-color: aqua;
+    top: 6vh;
+    right: 5vw;
+}
+
+.linkName{
+    margin-left: 5px;
+}
+
+.hide{
+    display: none;
+}
+
+.connectWallet{
+    margin-left: auto;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+@media (prefers-color-scheme: light) {
+    .whiteIcon {
+      filter: invert(1);
+    }
+}
+@media (prefers-color-scheme: dark) {
+    .blackIcon {
+      filter: invert(1);
+    }
+}  
+
+  
