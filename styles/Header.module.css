@@ -4,37 +4,94 @@
     min-height: 40px;
     background-color: navy;
     align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
-
 .logo{
     font-size: 40px;
     padding-left: 5%;
-}
-
-.menuButton{
-    padding-right: 5%;
     cursor: pointer;
 }
+/* .blackIcon{
+    z-index: 1;
+     position: absolute; 
+} 
 
-.dropDownMenu{
+/* .dropDownMenu{
+    
+    cursor: pointer;
+} */
+
+/* .dropDownMenu{
     position: absolute;
     background-color: aqua;
     top: 6vh;
     right: 5vw;
+    position: relative; 
+   display: inline-block;
+  display: Flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.dropDownContent{
+     display: none; 
+   position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1; 
+  position: relative;
+} */
+.dropDownMenu {
+    position: relative;
+    display: inline-block;
+}
+
+.dropDownContent {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    
+}
+
+.dropDownMenu:hover .dropDownContent {
+    display: block;
 }
 
 .linkName{
     margin-left: 5px;
 }
 
-.hide{
-    display: none;
-}
 
-.connectWallet{
-    margin-left: auto;
+.connect:active{
+    box-shadow: none;
+    transform: translateY(5px);
+}
+.connect{
+    border-radius: 15px;
+    position: relative;
+    color: white;
+    border: none;
+    background-color: #2f49f4;
+    box-shadow: 0 5px 0 #0d14d4;
+    font-size: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
     margin-right: 10px;
-    vertical-align: middle;
+}
+.left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 5%;
 }
 
 @media (prefers-color-scheme: light) {

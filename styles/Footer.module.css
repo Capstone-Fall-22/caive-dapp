@@ -1,9 +1,15 @@
 .footer{
     display: flex;
     background-color: navy;
+    justify-content: space-between;
     align-items: center;
 }
 
-.mintButton{
-    margin: auto;
+.logo{
+    font-size: 40px;
+    padding-left: 5%;
+}
+.social{
+    height: 25px;
+    padding-right: 5%;
 }
