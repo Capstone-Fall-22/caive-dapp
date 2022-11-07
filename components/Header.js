@@ -3,10 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Icons } from '../public/icons/icons.js';
 import styles from '../styles/Header.module.css';
+import { ethers } from "ethers";
+import Web3Modal from "web3modal";
+import { providerOptions } from './providerOption.js';
+
 
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const toggle = () => setMenuOpen(!menuOpen);
   const menuItems = [
     {
       path: "#nft",
@@ -36,11 +38,37 @@ const Header = () => {
       behavior: "smooth"
     });
   }
+  let provider;
+  let instance;
+  let signer;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggle = () => setMenuOpen(!menuOpen);
+
+  const [Web3Provider, setWeb3Provider] = useState(null);
+  const click = async () => {
+    const web3Modal = new Web3Modal({
+      network: "Goerli", // optional
+      cacheProvider: false, // optional
+      providerOptions // required
+    });
+
+    instance = await web3Modal.connect();
+
+    provider = new ethers.providers.Web3Provider(instance);
+    if (provider) setWeb3Provider(provider)
+
+    signer = provider.getSigner();
+  }
   return (
     <div className={styles.navBar}>
       <h1 className={styles.logo} onClick={scrollToTop}>SCAiPES</h1>
       <div className={styles.left}>
-        <button className={styles.connect}>connect</button>
+        <div id="connectionInfo">
+          {Web3Provider == null
+            ? <button className={styles.connect} onClick={click}>connect</button>
+            : <p>address:  {Web3Provider.provider.selectedAddress} </p>
+          }
+        </div>
         <div className={styles.dropDownMenu}>
           <Image onClick={toggle} role='button' alt='menu' className={styles.blackIcon} height='25px' width='25px' src={Icons.ThreeBars} />
           <div className={styles.dropDownContent} style={{ display: menuOpen ? "block" : "none" }}>
@@ -62,7 +90,6 @@ const Header = () => {
             </ul>
           </div>
         </div>
-
       </div>
     </div>
   )

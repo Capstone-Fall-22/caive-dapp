@@ -1,0 +1,17 @@
+.Generate:active{
+    box-shadow: none;
+    transform: translateY(5px);
+}
+.Generate{
+    border-radius: 15px;
+    position: fixed;
+    right: 70px;
+    bottom: 70px;
+    color: white;
+    border: none;
+    background-color: #2ff456;
+    box-shadow: 0 5px 0 #2ff456c8;
+    font-size: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
