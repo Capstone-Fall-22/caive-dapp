@@ -73,5 +73,7 @@
       filter: invert(1);
     }
 }  
-
+.acount:hover{
+    cursor: pointer;
+}
   
