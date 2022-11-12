@@ -1,214 +1,123 @@
 .nftPage{
     margin-top: 7.5vh;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100vw;
     background-color: blue;
 }
-#toggleContainer label { 
-  text-align: center;
-  width: 70px;
+/* .nftContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+} */
+.testImage{
+  /* margin: 20px; */
+  vertical-align: middle;
 }
 
-#container {
-  height: 100vh;
+
+.embla {
+  position: relative;
+  background-color: #f7f7f7;
+  padding: 20px;
+  max-width: 670px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.embla__viewport {
+  overflow: hidden;
   width: 100%;
-  box-sizing: border-box;
 }
 
-#toggleContainer {
-  height: 10vh;
+.embla__viewport.is-draggable {
+  cursor: move;
+  cursor: grab;
+}
+
+.embla__viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.embla__container {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 95vw;
-  position: absolute;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  margin-left: -10px;
 }
 
-#tilesContainer {
-  min-height: 90vh;
-  width: 100vw;
-  margin-top: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-  align-content: center;
-  
-}
-
-.tileItem {
-  width: 250px;
-  height: 250px;
-  margin: 5px;
-  border-radius: 5px;
-  
-  transition: all 0.5s ease;
-}
-
-.tileItem:hover {
-   transform: scale(1.05);
-  transition: all 0.5s ease;
-}
-
-#galleryContainer { 
-  height: 500px;
-  width: 800px;
-  background: transparent;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
+.embla__slide {
+  padding-left: 10px;
+  min-width: 100%;
   position: relative;
 }
 
-#toggle {
-  height: 10vh;
-  width: 200px;
-  display: flex;
-  align-items: center;
-  margin: 10px;
+.embla__slide__inner {
+  position: relative;
+  overflow: hidden;
+  height: 190px;
 }
 
-#tilesView {
-  min-height: 100vh;
-  width: 100vw;
-  background: rgb(246,210,106);
-  background: linear-gradient(111deg, rgba(246,210,106,1) 0%, rgba(255,159,0,1) 52%, rgba(251,197,100,1) 100%);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  
-}
-
-#galleryView {
-  height: 100vh;
-  width: 100vw;
-  background: rgb(246,210,106);
-  background: linear-gradient(111deg, rgba(246,210,106,1) 0%, rgba(255,159,0,1) 52%, rgba(251,197,100,1) 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#outer3 {
-  width: 100px;
-  height: 40px;
-  background-color: white;
-  margin: 10px auto;
-  border-radius: 3px;
-  border: 2px solid white;
-  transition: all 0.5s;
-}
-
-#slider3 {
-  height: 36px;
-  width: 46px;
-  background-color: orange;
-  border-radius: 3px;  
-  transition: all 0.5s;
-}
-
-#slider3.active {
-  -webkit-transform: translatex(50px);
-  -ms-transform: translatex(50px);
-  -o-transform: translatex(50px);
-  transform: translatex(50px);
-  transition: all 0.5s;
-  background-color: orange;
-}
-
-#outer3.outerActive {
-  background-color: white;
-  border: 2px solid white;
-  transition: all 0.5s;
-}
-
-#mainView {
-  height: 450px;
-  width: 450px;  
-  border-radius: 5px;
-  background-color: #eb9100;
-  margin-left: 10px;
-  margin-right: 10px;
-  z-index: 1;
-  transition: all 1s;  
-}
-
-#mainView:hover {
-  transform: scale(1.2);
-  transition: all 1s;   
-}
-
-#leftView {
-  height: 400px;
-  width: 150px;
-  opacity: 0.5;
-  border-radius: 5px;
-  transform: skewy(5deg);
-  transform-origin: top right;
-  background-color: #eb9100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 1s;  
-}
-
-#leftView:hover {
-  opacity: 1;
-  transition: all 1s;
-}
-
-#rightView {
-  height: 400px;
-  width: 150px;
-  opacity: 0.5;
-  border-radius: 5px;
-  transform: skewy(-5deg);
-  transform-origin: top left;
-  background-color: #eb9100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
- transition: all 1s;
-}
-
-#rightView:hover {
-  opacity: 1;
-  transition: all 1s;
-}
-
-.navBtns {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: none;
+.embla__slide__img {
   position: absolute;
-  opacity: 0.8;
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  min-height: 100%;
+  min-width: 100%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+}
+
+.embla--thumb {
+  padding-top: 0;
+  margin-top: -12px;
+}
+
+.embla__container--thumb {
+  cursor: default;
+  margin-left: -8px;
+}
+
+.embla__slide--thumb {
+  padding-left: 8px;
+  min-width: 20%;
+}
+
+.embla__slide__inner--thumb {
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  width: 100%;
   background-color: transparent;
-  cursor: pointer;
-  color: white;
+  position: relative;
+  display: block;
+  overflow: hidden;
 }
 
-.navBtns:hover {
+.embla__slide__thumbnail {
+  position: absolute;
+  opacity: 0.2;
+  top: 0;
+  bottom: 0;
+  left: -10000%;
+  right: -10000%;
+  margin: auto;
+  min-width: 1000%;
+  min-height: 1000%;
+  max-width: none;
+  transform: scale(0.1);
+  transition: opacity 0.2s;
+}
+
+.embla__slide--thumb.is-selected .embla__slide__thumbnail {
   opacity: 1;
-  transition: all 1s;
-  background-color: #eb9100;
-}
-
-#navLeft {
-  left: 50px;
-}
-
-#navRight {
-  right: 50px;
-}
-
-#linkTag { 
-  cursor: pointer;
-  z-index: 1;
-  box-sizing: border-box;
 }
