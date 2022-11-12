@@ -35,13 +35,13 @@ const Nft = ({ slides }) => {
         dragFree: true
     });
 
-    const onThumbClick = useCallback(
-        (index) => {
-            if (!embla || !emblaThumbs) return;
-            if (emblaThumbs.clickAllowed()) embla.scrollTo(index);
-        },
-        [embla, emblaThumbs]
-    );
+    // const onThumbClick = useCallback(
+    //     (index) => {
+    //         if (!embla || !emblaThumbs) return;
+    //         if (emblaThumbs.clickAllowed()) embla.scrollTo(index);
+    //     },
+    //     [embla, emblaThumbs]
+    // );
 
     const onSelect = useCallback(() => {
         if (!embla || !emblaThumbs) return;
@@ -67,11 +67,11 @@ const Nft = ({ slides }) => {
 
             <div className={styles["embla"]}>
                 <div className={styles["embla__viewport"]} ref={mainViewportRef}>
-                    <div className={styles["embla__Container"]}>
+                    <div className={styles["embla__container"]}>
                         {menuItems.map((img, index) => {
                             return (
                                 <div key={index} className={`${styles.testImage} ${styles.embla__slide}`}>
-                                    <div className="embla__slide__inner">
+                                    <div className={styles["embla__slide__inner"]}>
                                         <Image src={img.image} alt={img.name} className={styles.embla__slide__img} />
                                     </div>
                                 </div>
