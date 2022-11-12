@@ -6,12 +6,16 @@ import Tech from '../components/Tech';
 import About from '../components/About';
 import Timeline from '../components/Timeline';
 import Generate from '../components/Generate'
+
+
+const SLIDE_COUNT = 10;
+const slides = Array.from(Array(SLIDE_COUNT).keys());
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Header />
       <Generate />
-      <Nft />
+      <Nft slides={slides} />
       <Tech />
       <About />
       <Timeline />
