@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from '../styles/Timeline.module.css'
-import cn from 'classnames'
 const highlight = [
     {
         name: 'hightlight 1',
