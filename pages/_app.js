@@ -7,18 +7,17 @@ import About from '../components/About';
 import Timeline from '../components/Timeline';
 import Generate from '../components/Generate'
 
-
-const SLIDE_COUNT = 10;
-const slides = Array.from(Array(SLIDE_COUNT).keys());
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Header />
+      {/* <div className='y'> */}
       <Generate />
-      <Nft slides={slides} />
+      <Nft />
       <Tech />
       <About />
       <Timeline />
+      {/* </div> */}
       <Footer />
     </>
   )

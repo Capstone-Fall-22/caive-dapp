@@ -67,7 +67,7 @@ const highlight = [
 const Timeline = () => {
     return (
         <div id='timeline' className={styles.timeline}>
-            <h1>Timeline</h1>
+            <h1 className={styles.pageTitle}>Timeline</h1>
             {
                 highlight.map((item, index) => {
                     return (

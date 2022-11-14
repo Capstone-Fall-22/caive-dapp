@@ -1,11 +1,12 @@
-import billboard from './billboard.jpeg'
-import spotify from './spotify.jpeg'
-import wiki from './wiki.jpeg'
-
+import image1 from './image1.png'
+import image2 from './image2.png'
+import image3 from './image3.png'
+import image4 from './image4.png'
 const images = {
-    billboard,
-    spotify,
-    wiki
+    image1,
+    image2,
+    image3,
+    image4
 }
 
 export { images };
