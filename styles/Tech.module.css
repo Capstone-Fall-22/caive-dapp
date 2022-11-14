@@ -3,18 +3,17 @@
     align-items: center;
     justify-content: center;
     text-decoration: underline;
-    font-size: 50px;
-    margin-bottom: 40px;
     min-block-size: 2.5vw;
+    margin-bottom: 40px;
 }
-.team-container{
+.tech-container{
     padding: 0 10px;
     height: 90vh;
     columns:2;
     gap: 20px;
     margin:0 20px;
 }
-.member{
+.technology{
     border: solid 1px black;
     border-radius: 10px;
     margin-bottom: 50px;
@@ -22,18 +21,17 @@
     height: 300px;
     
 }
-.name{
+.title{
     padding: 15px;
     background-color: red;
     border-radius: 10px;
+    /* height: 20px; */
+    
     margin-bottom: 30px;
 }
-.About{
+.Tech{
     padding-top: 7.5vh;
-    background: radial-gradient(
-        circle, 
-        rgba(130, 0, 208, 88%) 0%, 
-        rgba(60, 141, 255, 0.862) 31.05%, 
-        #0026fb 100%);
-       };
-    
+    background: 
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(12, 6, 80, 0.2)), 
+    linear-gradient(180deg, #000000 0%, #0127fa  100%);
+}

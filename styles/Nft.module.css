@@ -1,116 +1,124 @@
 .nftPage{
-    margin-top: 7.5vh;
     height: 100vh;
+    background-color: blue;
+    padding-top: 7.5vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
 }
-/* .slides {
-  display: grid;
-  > .slide {
-    grid-area: 1 / -1;
-  }
-
-  > button {
-    appearance: none;
-    background: transparent;
-    border: none;
-    color: white;
-    position: absolute;
-    font-size: 5rem;
-    width: 5rem;
-    height: 5rem;
-    top: 30%;
-    transition: opacity 0.3s;
-    opacity: 0.7;
-    z-index: 5;
-
-    &:hover {
-      opacity: 1;
-    }
-
-    &:focus {
-      outline: none;
-    }
-
-    &:first-child {
-      left: -50%;
-    }
-    &:last-child {
-      right: -50%;
-    }
-  }
-} */
-
-
-.slideContent {
-  width: 30vw;
-  height: 40vw;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  transition: transform 0.5s ease-in-out;
-  opacity: 0.7;
-
-  display: grid;
-  align-content: center;
-
-  transform-style: preserve-3d;
-  transform: perspective(1000px) translateX(calc(100% * var(--offset)))
-    rotateY(calc(-45deg * var(--dir)));
+.pageTitle{
+  min-block-size: 2.5vw;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.slideContentInner {
-  transform-style: preserve-3d;
-  transform: translateZ(2rem);
-  transition: opacity 0.3s linear;
-  text-shadow: 0 0.1rem 1rem #000;
-  opacity: 0;
-/* 
-  .slideSubtitle, .slideTitle {
-    font-size: 2rem;
-    font-weight: normal;
-    letter-spacing: 0.2ch;
-    text-transform: uppercase;
-    margin: 0;
-  }
-
-  .slideSubtitle::before {
-    content: "— ";
-  }
-
-  .slideDescription {
-    margin: 0;
-    font-size: 0.8rem;
-    letter-spacing: 0.2ch;
-  } */
+.embla {
+  position: relative;
+  background-color: #f7f7f7;
+  padding: 20px;
+  max-width: 670px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
 }
 
+.embla__viewport {
+  overflow: hidden;
+  width: 100%;
+}
 
-.slide[data-active] {
-  z-index: 2;
-  pointer-events: auto;
+.embla__viewport.is-draggable {
+  cursor: move;
+  cursor: grab;
+}
 
-  /* .slideBackground {
-    opacity: 0.2;
-    transform: none;
-  }
+.embla__viewport.is-dragging {
+  cursor: grabbing;
+}
 
-  .slideContentInner {
-    opacity: 1;
-  }
+.embla__container {
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  margin-left: -10px;
 
-  .slideContent {
-    --x: calc(var(--px) - 0.5);
-    --y: calc(var(--py) - 0.5);
-    opacity: 1;
+}
 
-    transform: perspective(1000px);
+.embla__slide {
+  padding-left: 10px;
+  min-width: 100%;
+  position: relative;
+}
 
-    &:hover {
-      transition: none;
-      transform: perspective(1000px) rotateY(calc(var(--x) * 45deg))
-        rotateX(calc(var(--y) * -45deg));
-    }
-  } */
+.embla__slide__inner {
+  position: relative;
+  overflow: hidden;
+  height: 35vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.embla__slide__img {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  min-height: 100%;
+  min-width: 100%;
+  max-width: none;
+}
+
+.embla--thumb {
+  padding-top: 0;
+  margin-top: -12px;
+}
+
+.embla__container--thumb {
+  cursor: default;
+  margin-left: -8px;
+}
+
+.embla__slide--thumb {
+  padding-left: 8px;
+  min-width: 20%;
+}
+
+.embla__slide__inner--thumb {
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  width: 100%;
+  background-color: transparent;
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.embla__slide__thumbnail {
+  position: absolute;
+  opacity: 0.2;
+  top: 0;
+  bottom: 0;
+  left: -10000%;
+  right: -10000%;
+  margin: auto;
+  min-width: 1000%;
+  min-height: 1000%;
+  max-width: none;
+  transition: opacity 0.2s smooth;
+  
+}
+
+.embla__slide--thumb.is-selected .embla__slide__thumbnail {
+  opacity: 1;
 }

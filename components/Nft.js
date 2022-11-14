@@ -1,14 +1,103 @@
 import styles from '../styles/Nft.module.css'
-import React from 'react';
-// import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
-// import 'bootstrap'
-import { images } from '../public/images/images.js'
-const Nft = () => {
 
+import React, { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import { images } from '../public/images/images.js'
+import useEmblaCarousel from 'embla-carousel-react'
+import { Thumb } from "./EmblaCarouselThumb";
+// import Close from '../public/Close.png'
+
+const Nft = () => {
+    const menuItems = [
+        {
+            name: "image1",
+            image: images.image1
+        },
+        {
+            name: "image2",
+            image: images.image2
+        },
+        {
+            name: "image3",
+            image: images.image3
+        },
+        {
+            name: "image4",
+            image: images.image4
+        }
+    ]
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false });
+    const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({
+        containScroll: "keepSnaps",
+        selectedClass: "",
+        dragFree: true
+    });
+    //thumbnail scroll on click
+    const onThumbClick = useCallback(
+        (index) => {
+            if (!embla || !emblaThumbs) return;
+            if (emblaThumbs.clickAllowed()) embla.scrollTo(index);
+        },
+        [embla, emblaThumbs]
+    );
+    const onSelect = useCallback(() => {
+        if (!embla || !emblaThumbs) return;
+        setSelectedIndex(embla.selectedScrollSnap());
+        emblaThumbs.scrollTo(embla.selectedScrollSnap());
+    }, [embla, emblaThumbs, setSelectedIndex]);
+    useEffect(() => {
+        if (!embla) return;
+        onSelect();
+        embla.on("select", onSelect);
+    }, [embla, onSelect]);
+    // const [modalIsOpen, setModalIsOpen] = useState(false);
+    // const toggle = () => setModalIsOpen(!modalIsOpen);
+    // const popup = (image) => {
+    //     // document.getElementById("popup").style.display = "none";
+    //     <div>
+    //         <Image src={Close} />
+    //     </div>
+    // }
     return (
         <div id='nft' className={styles["nftPage"]}>
-            <h1>NFT</h1>
-
+            <h1 className={styles.pageTitle}>NFT</h1>
+            <div className={styles["embla"]}>
+                <div className={styles["embla__viewport"]} ref={mainViewportRef}>
+                    <div className={styles["embla__container"]}>
+                        {menuItems.map((img, index) => {
+                            return (
+                                <div key={index} className={styles.embla__slide}>
+                                    <div className={styles["embla__slide__inner"]}>
+                                        <Image src={img.image} alt={img.name}
+                                            className={`${styles.embla__slide__img}`}
+                                        />
+                                    </div>
+                                </div>
+                            )
+                        }
+                        )}
+                    </div>
+                </div>
+            </div>
+            <div className={`${styles["embla"]} ${styles["embla--thumb"]}}`}>
+                <div className={styles["embla__viewport"]} ref={thumbViewportRef}>
+                    <div className={`${styles["embla__container"]} ${styles["embla__container--thumb"]}`}>
+                        {menuItems.map((img, index) => (
+                            <Thumb
+                                onClick={() => onThumbClick(index)}
+                                selected={index === selectedIndex}
+                                imgSrc={img.image}
+                                name={img.name}
+                                key={index}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+            {/* <div id='popup' className={`${modalIsOpen ? styles['openModal'] : styles['closeModal']}`}>
+                <Image src={Close} />
+            </div> */}
         </div>
     )
 }

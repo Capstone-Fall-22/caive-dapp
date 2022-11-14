@@ -7,7 +7,7 @@ const team = [
         "body": "Chen is currently a senior at Hunter College studying computer science. In the past, he has explored blockchain technologies and is a big believer in the future of blockchain and crypto. For this project, he worked on the art generating AI. For this, leveraged the power of openly available datasets and GANs. He hopes that the art generated can inspire you to create something amazing."
     }, {
         "name": "Zayen",
-        "body": "this is zayen"
+        "body": "Zayen Yusuf, Senior at Hunter College. Working on the backend of the project. Previous experiences include image editing and game modifications. Interesting in becoming a game dev"
     }, {
         "name": "Suresh",
         "body": "Suresh Dangol, a senior student at Hunter College majoring in computer science. I'm graduating in the Fall of 2022. On this 'AI Generated NFTs' project, I'm working on smart contracts, where the users can mint, burn, or replace the NFTs."
@@ -25,7 +25,7 @@ const About = () => {
                     return (
                         <div key={index} className={styles["member"]}>
                             <h1 className={styles["name"]}>{item.name}</h1>
-                            <h3>{item.body}</h3>
+                            <p>{item.body}</p>
                         </div>
                     )
                 })}

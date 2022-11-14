@@ -35,7 +35,7 @@ const Footer = () => {
       <div className={styles.social}>
         {socialItems.map((item, index) => {
           return (
-            <a href={item.link} key={index} padding="0 10px">
+            <a href={item.link} key={index} className={styles.icons}>
               <Image src={item.image} alt={socialItems.name} height='25px' width='25px' />
             </a>
           )
