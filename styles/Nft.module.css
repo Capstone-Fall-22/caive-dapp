@@ -1,21 +1,18 @@
 .nftPage{
-    margin-top: 7.5vh;
     height: 100vh;
-    width: 100vw;
     background-color: blue;
-}
-/* .nftContainer{
+    padding-top: 7.5vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-} */
-.testImage{
-  /* margin: 20px; */
-  vertical-align: middle;
 }
-
+.pageTitle{
+  min-block-size: 2.5vw;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .embla {
   position: relative;
@@ -24,7 +21,7 @@
   max-width: 670px;
   margin-left: auto;
   margin-right: auto;
-  zoom: 230%;
+  margin-top: 20px;
 }
 
 .embla__viewport {
@@ -48,6 +45,7 @@
   -khtml-user-select: none;
   -webkit-tap-highlight-color: transparent;
   margin-left: -10px;
+
 }
 
 .embla__slide {
@@ -59,7 +57,7 @@
 .embla__slide__inner {
   position: relative;
   overflow: hidden;
-  height: 190px;
+  height: 35vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,7 +72,6 @@
   min-height: 100%;
   min-width: 100%;
   max-width: none;
-  /* transform: translate(-50%, -50%); */
 }
 
 .embla--thumb {
@@ -118,8 +115,8 @@
   min-width: 1000%;
   min-height: 1000%;
   max-width: none;
-  transform: scale(0.1);
-  transition: opacity 0.2s;
+  transition: opacity 0.2s smooth;
+  
 }
 
 .embla__slide--thumb.is-selected .embla__slide__thumbnail {

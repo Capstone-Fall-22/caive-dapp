@@ -3,30 +3,28 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { images } from '../public/images/images.js'
 import useEmblaCarousel from 'embla-carousel-react'
-// import Autoplay from 'embla-carousel-autoplay'
+import { Thumb } from "./EmblaCarouselThumb";
+// import Close from '../public/Close.png'
 
-const Nft = ({ slides }) => {
+const Nft = () => {
     const menuItems = [
         {
-            name: "billboard",
-            image: images.billboard
+            name: "image1",
+            image: images.image1
         },
         {
-            name: "spotify",
-            image: images.spotify
+            name: "image2",
+            image: images.image2
         },
         {
-            name: "wiki",
-            image: images.wiki
+            name: "image3",
+            image: images.image3
+        },
+        {
+            name: "image4",
+            image: images.image4
         }
     ]
-
-    // const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false }, [Autoplay()])
-    // useEffect(() => {
-    //     if (emblaApi) {
-    //         // Embla API is ready
-    //     }
-    // }, [emblaApi])
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false });
     const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({
@@ -34,45 +32,45 @@ const Nft = ({ slides }) => {
         selectedClass: "",
         dragFree: true
     });
-
-    // const onThumbClick = useCallback(
-    //     (index) => {
-    //         if (!embla || !emblaThumbs) return;
-    //         if (emblaThumbs.clickAllowed()) embla.scrollTo(index);
-    //     },
-    //     [embla, emblaThumbs]
-    // );
-
+    //thumbnail scroll on click
+    const onThumbClick = useCallback(
+        (index) => {
+            if (!embla || !emblaThumbs) return;
+            if (emblaThumbs.clickAllowed()) embla.scrollTo(index);
+        },
+        [embla, emblaThumbs]
+    );
     const onSelect = useCallback(() => {
         if (!embla || !emblaThumbs) return;
         setSelectedIndex(embla.selectedScrollSnap());
         emblaThumbs.scrollTo(embla.selectedScrollSnap());
     }, [embla, emblaThumbs, setSelectedIndex]);
-
     useEffect(() => {
         if (!embla) return;
         onSelect();
         embla.on("select", onSelect);
     }, [embla, onSelect]);
-
+    // const [modalIsOpen, setModalIsOpen] = useState(false);
+    // const toggle = () => setModalIsOpen(!modalIsOpen);
+    // const popup = (image) => {
+    //     // document.getElementById("popup").style.display = "none";
+    //     <div>
+    //         <Image src={Close} />
+    //     </div>
+    // }
     return (
         <div id='nft' className={styles["nftPage"]}>
-            <h1>NFT</h1>
-            {/* a carousel that contains images from images.js */}
-            {/* <div>
-                <Image src={images[0]} alt="nft1" />
-                <Image src={images[1]} alt="nft2" />
-                <image src={images[2]} alt="nft3" />
-            </div> */}
-
+            <h1 className={styles.pageTitle}>NFT</h1>
             <div className={styles["embla"]}>
                 <div className={styles["embla__viewport"]} ref={mainViewportRef}>
                     <div className={styles["embla__container"]}>
                         {menuItems.map((img, index) => {
                             return (
-                                <div key={index} className={`${styles.testImage} ${styles.embla__slide}`}>
+                                <div key={index} className={styles.embla__slide}>
                                     <div className={styles["embla__slide__inner"]}>
-                                        <Image src={img.image} alt={img.name} className={styles.embla__slide__img} />
+                                        <Image src={img.image} alt={img.name}
+                                            className={`${styles.embla__slide__img}`}
+                                        />
                                     </div>
                                 </div>
                             )
@@ -81,6 +79,24 @@ const Nft = ({ slides }) => {
                     </div>
                 </div>
             </div>
+            <div className={`${styles["embla"]} ${styles["embla--thumb"]}}`}>
+                <div className={styles["embla__viewport"]} ref={thumbViewportRef}>
+                    <div className={`${styles["embla__container"]} ${styles["embla__container--thumb"]}`}>
+                        {menuItems.map((img, index) => (
+                            <Thumb
+                                onClick={() => onThumbClick(index)}
+                                selected={index === selectedIndex}
+                                imgSrc={img.image}
+                                name={img.name}
+                                key={index}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+            {/* <div id='popup' className={`${modalIsOpen ? styles['openModal'] : styles['closeModal']}`}>
+                <Image src={Close} />
+            </div> */}
         </div>
     )
 }

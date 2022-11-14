@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     text-decoration: underline;
-    font-size: 50px;
+    min-block-size: 2.5vw;
     margin-bottom: 40px;
 }
 .tech-container{
@@ -30,7 +30,7 @@
     margin-bottom: 30px;
 }
 .Tech{
-    padding-top: 50px;
+    padding-top: 7.5vh;
     background: 
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(12, 6, 80, 0.2)), 
     linear-gradient(180deg, #000000 0%, #0127fa  100%);
