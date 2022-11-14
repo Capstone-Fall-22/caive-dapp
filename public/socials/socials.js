@@ -1,7 +1,7 @@
-import Discord from "./Discord.png"
-import Figma from "./Figma.png"
-import Github from "./Github.png"
-import opensea from "./opensea.png"
+import Discord from "./Discord_Negative.png"
+import Figma from "./Figma_Negative.png"
+import Github from "./Github_Negative.png"
+import opensea from "./opensea_Negative.png"
 
 const socials = {
     Discord,

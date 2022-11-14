@@ -32,12 +32,6 @@ const Header = () => {
     }
 
   ];
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }
   let provider;
   let instance;
   let signer;
@@ -61,7 +55,9 @@ const Header = () => {
   }
   return (
     <div className={styles.navBar}>
-      <h1 className={styles.logo} onClick={scrollToTop}>SCAiPES</h1>
+      <Link href='/'>
+        <h1 className={styles.logo}>SCAiPES</h1>
+      </Link>
       <div className={styles.left}>
         <div id="connectionInfo">
           {Web3Provider == null
@@ -76,14 +72,14 @@ const Header = () => {
               {menuItems.map((item) => {
                 return (
                   <>
-                    <Link href={item.path}>
-                      <li>
-                        <div>
+                    <li>
+                      <Link href={item.path}>
+                        <div className={styles.navPage}>
                           <Image src={item.image} alt={item.name} height='25px' width='25px' />
-                          <span className={styles.linkName}>{item.name}</span>
+                          <span>{item.name}</span>
                         </div>
-                      </li>
-                    </Link>
+                      </Link>
+                    </li>
                   </>
                 )
               })}
