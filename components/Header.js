@@ -32,6 +32,12 @@ const Header = () => {
     }
 
   ];
+  // const scrollToTop = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth"
+  //   });
+  // }
   let provider;
   let instance;
   let signer;
@@ -62,7 +68,7 @@ const Header = () => {
         <div id="connectionInfo">
           {Web3Provider == null
             ? <button className={styles.connect} onClick={click}>connect</button>
-            : <Link href='/user'><p className={styles.acount}>address:  {Web3Provider.provider.selectedAddress} </p></Link>
+            : <Link href='/user'><p>address:  {Web3Provider.provider.selectedAddress} </p></Link>
           }
         </div>
         <div className={styles.dropDownMenu}>
@@ -72,14 +78,14 @@ const Header = () => {
               {menuItems.map((item) => {
                 return (
                   <>
-                    <li>
-                      <Link href={item.path}>
-                        <div className={styles.navPage}>
+                    <Link href={item.path}>
+                      <li>
+                        <div>
                           <Image src={item.image} alt={item.name} height='25px' width='25px' />
-                          <span>{item.name}</span>
+                          <span className={styles.linkName}>{item.name}</span>
                         </div>
-                      </Link>
-                    </li>
+                      </li>
+                    </Link>
                   </>
                 )
               })}

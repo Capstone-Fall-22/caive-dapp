@@ -27,7 +27,7 @@
     padding: 10px 40px;
     position: relative;
     background-color: inherit;
-    width: 50%;
+    width: auto;
   }
   /* The circles on the timeline */
   .container::after {
@@ -75,6 +75,9 @@
   .right::before {
     content: " ";
     height: 0;
+    /* position: flex;
+    align-items: center;
+    justify-content: center; */
     position: absolute;
     top: 22px;
     width: 0;
@@ -95,10 +98,14 @@
     padding: 20px 30px;
     background-color: white;
     position: relative;
+    position: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 6px;
     box-sizing: border-box;
     color : black;
-    opacity: 0;
+    width: 25vw;
+    opacity: 1;
   }
   
   /* Media queries - Responsive timeline on screens less than 600px wide */
@@ -110,14 +117,15 @@
     
     /* Full-width containers */
     .container {
-      width: 100%;
+      width: 25vw;
       padding-left: 70px;
       padding-right: 25px;
     }
+
     
     /* Make sure that all arrows are pointing leftwards */
     .container::before {
-      left: 60px;
+      left: 10%;
       border: medium solid white;
       border-width: 10px 10px 10px 0;
       border-color: transparent white transparent transparent;
@@ -125,7 +133,10 @@
     
     /* Make sure all circles are at the same spot */
     .left::after, .right::after {
-      left: 15px;
+      /* left: 10%; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     /* Make all right containers behave like the left ones */
@@ -145,3 +156,17 @@
     align-items: center;
     justify-content: center;
   }
+      /* for resize purposes */
+/* @media (min-width: 500px) {
+  .container {
+    width: 34.7vw
+  }
+} */
+/* @media (min-width: 700px) {
+  .container{
+    width: 38vw
+  }
+} */
+/* .highlightNum{
+  font-size: 10%;
+} */
