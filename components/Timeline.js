@@ -86,8 +86,8 @@ const Timeline = () => {
                                                 Object.values(item.bullets).map((bullet, index) => {
                                                     return (
                                                         <div key={index} className={styles.bullet}>
-                                                            <h3>{bullet.name}</h3>
-                                                            <p>{bullet.discription}</p>
+                                                            <h3 className={styles.highlightNum}>{bullet.name}</h3>
+                                                            <p className={styles.highlightBody}>{bullet.discription}</p>
                                                         </div>
                                                     )
                                                 })
@@ -106,8 +106,8 @@ const Timeline = () => {
                                                 Object.values(item.bullets).map((bullet, index) => {
                                                     return (
                                                         <div key={index} className={styles.bullet}>
-                                                            <h3>{bullet.name}</h3>
-                                                            <p>{bullet.discription}</p>
+                                                            <h3 className={styles.highlightNum}>{bullet.name}</h3>
+                                                            <p className={styles.highlightBody}>{bullet.discription}</p>
                                                         </div>
                                                     )
                                                 })
