@@ -9,15 +9,14 @@
 .team-container{
     padding: 0 10px;
     min-height: 90vh;
-    columns:2;
     gap: 20px;
-    margin:0 20px;
+    margin:0 5vw;
 }
 .member{
     border: solid 1px black;
     border-radius: 10px;
-    margin-bottom: 10vh;
-    padding-bottom: 5vh;
+    margin-bottom: 5vh;
+    padding-bottom: 10vh;
     text-align: center;
     max-height: none;
 }
@@ -28,27 +27,19 @@
     margin-bottom: 30px;
 }
 .About{
-    padding-top: 7.5vh;
+    padding: 7.5vh 0;
     background: radial-gradient(
         circle, 
         rgba(130, 0, 208, 88%) 0%, 
         rgba(60, 141, 255, 0.862) 31.05%, 
         #0026fb 100%);
-       };
+};
 /* for resize purposes */
 @media (min-width: 200px) {
     .team-container {
       -webkit-column-count: 1;
-      -webkit-column-gap: 20px;
-      -webkit-column-rule: 1px solid #000;
-  
       -moz-column-count: 1;
-      -moz-column-gap: 20px;
-      -moz-column-rule: 1px solid #000;
-  
       column-count: 1;
-      column-gap: 20px;
-      column-rule: 1px solid #000;
     }
   }
   @media (min-width: 600px) {

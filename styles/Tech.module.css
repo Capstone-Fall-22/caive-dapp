@@ -9,7 +9,6 @@
 .tech-container{
     padding: 0 10px;
     min-height: 90vh;
-    columns:2;
     gap: 20px;
     margin:0 5vw;
 }
@@ -20,19 +19,15 @@
     padding-bottom: 5vh;
     text-align: center;
     max-height: none;
-    
 }
 .title{
     padding: 15px;
     background-color: red;
     border-radius: 10px;
     margin-bottom: 30px;
-    /* height: 20px; */
-    
-    margin-bottom: 30px;
 }
 .Tech{
-    padding-top: 7.5vh;
+    padding: 7.5vh 0;
     background: 
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(12, 6, 80, 0.2)), 
     linear-gradient(180deg, #000000 0%, #0127fa  100%);
@@ -41,16 +36,8 @@
 @media (min-width: 200px) {
     .tech-container {
       -webkit-column-count: 1;
-      -webkit-column-gap: 20px;
-      -webkit-column-rule: 1px solid #000;
-  
-      -moz-column-count: 1;
-      -moz-column-gap: 20px;
-      -moz-column-rule: 1px solid #000;
-  
+      -moz-column-count: 1;  
       column-count: 1;
-      column-gap: 20px;
-      column-rule: 1px solid #000;
     }
   }
   @media (min-width: 600px) {
