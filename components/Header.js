@@ -41,6 +41,7 @@ const Header = () => {
   let provider;
   let instance;
   let signer;
+  const [address, setAddress] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const toggle = () => setMenuOpen(!menuOpen);
 
@@ -58,6 +59,8 @@ const Header = () => {
     if (provider) setWeb3Provider(provider)
 
     signer = provider.getSigner();
+    address = await signer.getAddress();
+    setAddress(address);
   }
   return (
     <div className={styles.navBar}>
@@ -68,7 +71,7 @@ const Header = () => {
         <div id="connectionInfo">
           {Web3Provider == null
             ? <button className={styles.connect} onClick={click}>connect</button>
-            : <Link href='/user'><p>address:  {Web3Provider.provider.selectedAddress} </p></Link>
+            : <Link href='/user'><p>address:  {address.substr(0, 5) + '...' + address.substr(address.length - 4, address.length)} </p></Link>
           }
         </div>
         <div className={styles.dropDownMenu}>
