@@ -1,46 +1,56 @@
 .navBar{
     display: flex;
-    height: 7.5vh;
+    height: 7vh;
     min-height: 40px;
-    background-color: navy;
+    background-color: #222222;
     align-items: center;
     justify-content: space-between;
     position: fixed;
     top: 0;
     width: 100vw;
     z-index: 100;
+    box-shadow: 0px 20px 10px -15px #111;    
 }
 .logo{
     font-size: 40px;
     padding-left: 5%;
     cursor: pointer;
 }
-.dropDownMenu {
-    position: relative;
-    /* display: inline-block; */
-    padding-left: 5px;
-    display: flex;
-    flex-direction: column;
-}
-
 .dropDownContent {
-    display: grid;
-    position: absolute;
-    background-color: black;
+    display: flex;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    margin-top: 50px;
-    right: 0;
+    /* padding: 12px 16px; */
+    margin-top: 5px;
     border-radius: 20px;
 }
-.blackIcon{
-    z-index: 3;
+.left{
+    display:flex;
 }
+.link{
+    display: flex;
+    margin: 0 10px;
+    color: #555555;
+    padding: 10px;
+    border-left: white solid 1px;
+}
+.link:hover{
+    background-color: #555555;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    border-left: none;
 
-.dropDownMenu:hover .dropDownContent {
-    display: block;
 }
+.linkName{
+    margin-left: 5px;
+}
+/* .blackIcon{
+    z-index: 3;
+} */
+
+/* .dropDownMenu:hover .dropDownContent {
+    display: block;
+} */
 
 .navPage:hover{
     cursor: pointer;
@@ -63,14 +73,14 @@
     cursor: pointer;
     margin-right: 10px;
 }
-.left{
+.right{
     display: flex;
     align-items: center;
     justify-content: center;
     padding-right: 5%;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
     .whiteIcon {
       filter: invert(1);
     }
@@ -79,8 +89,8 @@
     .blackIcon {
       filter: invert(1);
     }
-}  
-.acount:hover{
+}   */
+.account:hover{
     cursor: pointer;
 }
   

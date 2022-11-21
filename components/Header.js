@@ -42,8 +42,8 @@ const Header = () => {
   let instance;
   let signer;
   const [address, setAddress] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const toggle = () => setMenuOpen(!menuOpen);
+  // const [menuOpen, setMenuOpen] = useState(false);
+  // const toggle = () => setMenuOpen(!menuOpen);
 
   const [Web3Provider, setWeb3Provider] = useState(null);
   const click = async () => {
@@ -59,41 +59,37 @@ const Header = () => {
     if (provider) setWeb3Provider(provider)
 
     signer = provider.getSigner();
-    address = await signer.getAddress();
-    setAddress(address);
+    // address = await signer.getAddress();
+    // setAddress(address);
+    setAddress(await signer.getAddress());
   }
   return (
     <div className={styles.navBar}>
-      <Link href='/'>
-        <h1 className={styles.logo}>SCAiPES</h1>
-      </Link>
       <div className={styles.left}>
+        <Link href='/'>
+          <h1 className={styles.logo}>SCAiPES</h1>
+        </Link>
+        <ul className={styles.dropDownContent}>
+          {menuItems.map((item, index) => {
+            return (
+              <li key={index}>
+                <Link href={item.path} replace>
+                  <div className={styles.link}>
+                    <Image src={item.image} alt={item.name} height='30px' width='30px' />
+                    <span className={styles.linkName}>{item.name}</span>
+                  </div>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+      <div className={styles.right}>
         <div id="connectionInfo">
           {Web3Provider == null
             ? <button className={styles.connect} onClick={click}>connect</button>
-            : <Link href='/user'><p>address:  {address.substr(0, 5) + '...' + address.substr(address.length - 4, address.length)} </p></Link>
+            : <Link href='/user'><p className={styles.account}>address:  {address.substr(0, 5) + '...' + address.substr(address.length - 4, address.length)} </p></Link>
           }
-        </div>
-        <div className={styles.dropDownMenu}>
-          <Image onClick={toggle} role='button' alt='menu' className={styles.blackIcon} height='25px' width='25px' src={Icons.ThreeBars} />
-          <div className={styles.dropDownContent} style={{ display: menuOpen ? "block" : "none" }}>
-            <ul>
-              {menuItems.map((item) => {
-                return (
-                  <>
-                    <Link href={item.path}>
-                      <li>
-                        <div>
-                          <Image src={item.image} alt={item.name} height='25px' width='25px' />
-                          <span className={styles.linkName}>{item.name}</span>
-                        </div>
-                      </li>
-                    </Link>
-                  </>
-                )
-              })}
-            </ul>
-          </div>
         </div>
       </div>
     </div>
