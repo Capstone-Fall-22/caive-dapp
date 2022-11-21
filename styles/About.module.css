@@ -28,6 +28,7 @@
 }
 .About{
     padding: 7.5vh 0;
+    width: 100vw;
     background: radial-gradient(
         circle, 
         rgba(130, 0, 208, 88%) 0%, 
