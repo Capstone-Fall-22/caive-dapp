@@ -4,7 +4,10 @@ import Image from 'next/image';
 import { images } from '../public/images/images.js'
 import useEmblaCarousel from 'embla-carousel-react'
 import { Thumb } from "./EmblaCarouselThumb";
-// import Close from '../public/Close.png'
+// import GeneratePop from './GeneratePop';
+
+import Close from '../public/Close.png'
+import Generate from './Generate';
 
 const Nft = () => {
     const menuItems = [
@@ -50,13 +53,20 @@ const Nft = () => {
         onSelect();
         embla.on("select", onSelect);
     }, [embla, onSelect]);
-    // const [modalIsOpen, setModalIsOpen] = useState(false);
-    // const toggle = () => setModalIsOpen(!modalIsOpen);
-    // const popup = (image) => {
-    //     // document.getElementById("popup").style.display = "none";
-    //     <div>
-    //         <Image src={Close} />
-    //     </div>
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const toggle = () => setModalIsOpen(!modalIsOpen)
+
+    // const openImg = (image, imgName) => {
+    //     toggle
+    //     return (
+    //         <div id='popup'>
+    //             <Image src={Close} alt='close' />
+    //             <Image src={image} alt={imgName} />
+    //             <Generate />
+
+    //         </div>
+    //     )
+    //     // < GeneratePop   imgSrc = { image } title = { imgName } />
     // }
     return (
         <div id='nft' className={styles["nftPage"]}>
@@ -70,6 +80,8 @@ const Nft = () => {
                                     <div className={styles["embla__slide__inner"]}>
                                         <Image src={img.image} alt={img.name}
                                             className={`${styles.embla__slide__img}`}
+                                            onClick={toggle}
+                                        // onClick={<GeneratePop imgSrc={img.image} name={img.name} />}
                                         />
                                     </div>
                                 </div>
@@ -94,11 +106,16 @@ const Nft = () => {
                     </div>
                 </div>
             </div>
-            {/* <div id='popup' className={`${modalIsOpen ? styles['openModal'] : styles['closeModal']}`}>
-                <Image src={Close} />
-            </div> */}
+            <div id='popup' style={{ display: modalIsOpen ? "block" : "none" }} className={styles.pop}>
+                <Image src={Close} alt='close' onClick={toggle} className={styles.Close} />
+                {/* <div className={styles.underline}></div> */}
+                <div>
+                    <Image src={menuItems[selectedIndex].image} className={styles.imageView} alt={menuItems[selectedIndex].name} />
+                </div>
+            </div>
         </div>
     )
+
 }
 
 export default Nft;
