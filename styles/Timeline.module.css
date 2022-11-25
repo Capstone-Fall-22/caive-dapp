@@ -98,7 +98,7 @@
     box-sizing: border-box;
     color : black;
     min-width: 40vw;
-    opacity: 1;
+    opacity: 0;
   }
   
   /* Media queries - Responsive timeline on screens less than 600px wide */
@@ -119,4 +119,5 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 5vh;
   }

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import about from './Json/About.json'
 import styles from '../styles/About.module.css'
-const team = [
+
+let team = [
     {
         "name": "Chen",
         "body": "Chen is currently a senior at Hunter College studying computer science. In the past, he has explored blockchain technologies and is a big believer in the future of blockchain and crypto. For this project, he worked on the art generating AI. For this, leveraged the power of openly available datasets and GANs. He hopes that the art generated can inspire you to create something amazing."
