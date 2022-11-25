@@ -2,7 +2,7 @@ import React from 'react'
 import styles from '../styles/Footer.module.css'
 import Image from 'next/image';
 import { socials } from '../public/socials/socials.js';
-
+import Link from 'next/link';
 
 const socialItems = [
   {
@@ -31,7 +31,9 @@ const socialItems = [
 const Footer = () => {
   return (
     <div className={styles.footer}>
-      <h1 className={styles.logo}>SCAiPES</h1>
+      <Link href='/'>
+        <h1 className={styles.logo}>SCAiPES</h1>
+      </Link>
       <div className={styles.social}>
         {socialItems.map((item, index) => {
           return (
