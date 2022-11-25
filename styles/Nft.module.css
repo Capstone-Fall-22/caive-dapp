@@ -122,3 +122,31 @@
 .embla__slide--thumb.is-selected .embla__slide__thumbnail {
   opacity: 1;
 }
+.pop{
+  position: fixed;
+  margin-top: 7vh;
+  width: 50vw;
+  height: 70vh;
+  background-color: white;
+  /* display: flex;  */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  border-radius: 7px;
+}
+.Close{
+  /* display: block; */
+  /* align-self: flex-end; */
+  position: absolute;
+  top: 0;
+}
+.imageView{
+  /* float: ; */
+  margin-top: 100px;
+}
+/* .underline{
+  width: 50vw;
+  color: black;
+  height: 5px;
+  border-bottom: solid;
+} */

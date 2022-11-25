@@ -5,7 +5,7 @@ import { providerOptions } from './providerOption.js';
 import styles from '../styles/generate.module.css';
 
 const execute = async () => {
-    const contractAddress = "0xEB8b6D8Eddc35e9C70BC1C7A80b9cf0A01Bf21a6";
+    const contractAddress = "0x47AE92283cd7066a11f91D11d33c92A6A77e5bdF";
     const abi = [
         {
             "inputs": [],

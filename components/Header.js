@@ -71,7 +71,7 @@ const Header = () => {
         <div id="connectionInfo">
           {Web3Provider == null
             ? <button className={styles.connect} onClick={click}>connect</button>
-            : <Link href='/user'><p>address:  {address.substr(0, 5) + '...' + address.substr(address.length - 4, address.length)} </p></Link>
+            : <Link href='/user'><p className={styles.acount}>address:  {address.substr(0, 5) + '...' + address.substr(address.length - 4, address.length)} </p></Link>
           }
         </div>
         <div className={styles.dropDownMenu}>
