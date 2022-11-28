@@ -32,12 +32,6 @@ const Header = () => {
     }
 
   ];
-  // const scrollToTop = () => {
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: "smooth"
-  //   });
-  // }
   let provider;
   let instance;
   let signer;
@@ -59,8 +53,6 @@ const Header = () => {
     if (provider) setWeb3Provider(provider)
 
     signer = provider.getSigner();
-    // address = await signer.getAddress();
-    // setAddress(address);
     setAddress(await signer.getAddress());
   }
   return (
