@@ -1,0 +1,12 @@
+.popup{
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 250px;
+    height: 125px;
+    background-color: rgba(204, 34, 34, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}

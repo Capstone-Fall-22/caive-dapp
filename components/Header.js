@@ -6,6 +6,7 @@ import styles from '../styles/Header.module.css';
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from './providerOption.js';
+import PopUp from './PopUp.js';
 
 
 const Header = () => {
@@ -36,6 +37,8 @@ const Header = () => {
   let instance;
   let signer;
   const [address, setAddress] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [popUpText, setPopUpText] = useState('');
   // const [menuOpen, setMenuOpen] = useState(false);
   // const toggle = () => setMenuOpen(!menuOpen);
 
@@ -84,6 +87,7 @@ const Header = () => {
           }
         </div>
       </div>
+      {showPopup? <PopUp text={popUpText} /> : null }
     </div>
   )
 }

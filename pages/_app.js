@@ -7,9 +7,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Header />
-      {/* <div className='y'> */}
       <Component pageProps={pageProps} />
-      {/* </div> */}
       <Footer />
     </>
   )
