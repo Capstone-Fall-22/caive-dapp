@@ -1,0 +1,12 @@
+.not-found{
+    padding-top: 7.5vh;
+    height: 87.5vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.HomeLink{
+    text-decoration: underline;
+    color: rgb(21, 83, 255) ;
+}
