@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import styles from '../styles/404.module.css'
+
 const NotFound = () => {
     const router = useRouter()
     useEffect(() => {
