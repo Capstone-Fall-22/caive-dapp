@@ -4,12 +4,55 @@ import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from '../components/providerOption.js';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import GalleryImage from '../components/GalleryImage';
 
-const user = () => {
+import fs from 'fs';
+import path from 'path';
+
+const user = ({ abi, provider, contractAddress }) => {
     const router = useRouter();
 
+    const [imageURLs, setimageURLs] = useState({})
+
+    const getOwnedTokens = async (address, web3Provider) => {
+        const contract = new ethers.Contract(contractAddress, abi, web3Provider);
+        const numTokensOwned = await contract.balanceOf(address);
+
+        let ownedTokens = [];
+        for(let i = 0; i < numTokensOwned; i++){
+            const token = await contract.tokenOfOwnerByIndex(address, i);
+            ownedTokens.push(token);
+        }
+        
+        ownedTokens = ownedTokens.map((token) => {
+            return Number(token);
+        });
+        
+        ownedTokens = [...new Set(ownedTokens)];
+        
+        return ownedTokens;
+    }
     
+    const getImageURLs = async (address, web3Provider) => {
+        let ownedTokenIds = await getOwnedTokens(address, web3Provider);
+        let ownedTokenMetadataURLs = [];
+        for(let i = 0; i < ownedTokenIds.length; i++){
+            ownedTokenMetadataURLs.push(`https://storage.googleapis.com/scaipes-metadata/${ownedTokenIds[i]}.json`);
+        }
+
+        let ownedTokenImageURLs = {};
+        for(let i = 0; i < ownedTokenMetadataURLs.length; i++){
+            const response = await fetch(ownedTokenMetadataURLs[i]);
+            const data = await response.json();
+            ownedTokenImageURLs[ownedTokenIds[i]] = data.image.replace('ipfs://', 'https://ipfs.io/ipfs/');
+        }
+
+        return ownedTokenImageURLs;
+    }
+        
+    // On load, check if the user has connected their wallet already if not,
+    // redirect them to the home page. If they have, get their owned tokens
     useEffect(() => {
         const web3Modal = new Web3Modal({
             network: "Goerli", // optional
@@ -18,27 +61,27 @@ const user = () => {
         });
 
         const cachedProviderName = web3Modal.cachedProvider;
-        console.log(cachedProviderName);
+
         if (!cachedProviderName) {
             router.push('/');
-        }
-        // const web3Modal = new Web3Modal({
-        //     network: "Goerli", // optional
-        //     cacheProvider: true, // optional
-        //     providerOptions // required
-        // });
+        }else{
+            const web3Modal = new Web3Modal({
+                network: "Goerli", // optional
+                cacheProvider: true, // optional
+                providerOptions // required
+            });
         
-        // if(web3Modal.cachedProvider){
-        //     console.log(web3Modal.cachedProvider);
-        // }
-
-    }, [])
-    
-
-    
-    // if (!userInfo) {
-    //     router.push('/');
-    // }
+            web3Modal.connectTo(web3Modal.cachedProvider).then(async (instance) => {
+                const web3Provider = new ethers.providers.Web3Provider(instance);
+                const signer = web3Provider.getSigner();
+                const address = await signer.getAddress();
+                const ownedImageURLs = await getImageURLs(address, web3Provider);
+                return ownedImageURLs
+            }).then((ownedImageURLs) => {
+                setimageURLs(ownedImageURLs);
+            });
+        }
+    }, []);
 
     const burn = async () => {
         // Load contract from process.env
@@ -692,30 +735,42 @@ const user = () => {
         const contract = new ethers.Contract(contractAddress, abi, signer)
         await contract.publicMint(1)
         router.push("/user")
-
     }
+
     return (
         <div className={styles.users}>
             <h3>owned NFTs</h3>
-            <div className={styles.ListOwnNft}>
-                <div className={styles.OwnNft} onClick={burn}>1</div>
-                <div className={styles.OwnNft} onClick={burn}>2</div>
-                <div className={styles.OwnNft} onClick={burn}>3</div>
-                <div className={styles.OwnNft} onClick={burn}>4</div>
-                <div className={styles.OwnNft} onClick={burn}>5</div>
-                <div className={styles.OwnNft} onClick={burn}>6</div>
-                <div className={styles.OwnNft} onClick={burn}>7</div>
-                <div className={styles.OwnNft} onClick={burn}>8</div>
-                <div className={styles.OwnNft} onClick={burn}>9</div>
-                <div className={styles.OwnNft} onClick={burn}>10</div>
-                <div className={styles.OwnNft} onClick={burn}>11</div>
-                <div className={styles.OwnNft} onClick={burn}>12</div>
-                <div className={styles.OwnNft} onClick={burn}>13</div>
-                <div className={styles.OwnNft} onClick={burn}>14</div>
-            </div>
+                {Object.keys(imageURLs).length > 0? 
+                    <div className={styles.ListOwnNft}>
+                        {Object.keys(imageURLs).map((tokenId) => {
+                            return (
+                                <div key={tokenId}>
+                                    {imageURLs[tokenId]} {tokenId}
+                                    <GalleryImage url={imageURLs[tokenId]} />
+                                </div>
+                            )
+                        })}
+                    </div>
+                :
+                    null
+                }
             <p>move to galery page to see all NFTs</p>
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+    const abi = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'json', `${process.env.CONTRACT_ADDRESS}.json`), 'utf8')).abi;
+    let provider = new ethers.providers.AlchemyProvider("goerli", process.env.ALCHEMY_API_KEY);
+    provider = JSON.parse(JSON.stringify(provider))
+
+    return{
+        props: {
+            abi,
+            provider,
+            contractAddress: process.env.CONTRACT_ADDRESS
+        }
+    }
 }
 
 export default user

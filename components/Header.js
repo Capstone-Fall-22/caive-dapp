@@ -35,61 +35,55 @@ const Header = () => {
     }
 
   ];
-  let provider;
-  let instance;
+
   let signer;
-  const [address, setAddress] = useState("");
+
+  const [modal, setModal] = useState(null)
+  const [address, setAddress] = useState('');
+  const [provider, setProvider] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [popUpText, setPopUpText] = useState('');
-  // const [menuOpen, setMenuOpen] = useState(false);
-  // const toggle = () => setMenuOpen(!menuOpen);
 
-  const [Web3Provider, setWeb3Provider] = useState(null);
-  const [modal, setModal] = useState(null);
+  const disconnectUser = async () => {
+    if(modal){
+      modal.clearCachedProvider();
+    }
+    modal = null;
+    setProvider(null);
+    setAddress('');
+    router.push("/");
+  };
+  
+  const setUpProvider = async (instance) => {
+    let walletProvider = new ethers.providers.Web3Provider(instance);
+    
+    if(walletProvider){
+      signer = walletProvider.getSigner();
+      setAddress(await signer.getAddress());
+      setProvider(walletProvider);
+    }
+  }
 
-  useEffect(() => {
-    const web3Modal = new Web3Modal({
+  const click = async () => {
+    let web3Modal = new Web3Modal({
       network: "Goerli", // optional
       cacheProvider: true, // optional
       providerOptions // required
     });
     setModal(web3Modal);
     if(web3Modal.cachedProvider){
-      instance = web3Modal.connect().then(() => {
-        provider = new ethers.providers.Web3Provider(instance);
-        if (provider) {
-          setWeb3Provider(provider);
-        }
+      web3Modal.connectTo(web3Modal.cachedProvider).then(async (instance) => {
+          try{
+            setUpProvider(instance);
+          }catch(e){
+            disconnectUser();
+          }
       });
-
-      instance.on("accountsChanged", (accounts) => {
-        modal.clearCachedProvider();
-        setWeb3Provider(null);
-        setAddress('');
-        router.push("/");
-      });
+    }else{
+      let instance = await web3Modal.connect();
       
+      setUpProvider(instance);
     }
-  }, []);
-  
-
-  const click = async () => {
-    
-    instance = await modal.connect();
-    // instance.on('accountsChanged', () => {
-    //   modal.clearCachedProvider();
-    // });
-    // instance.on('chainChanged', () => {
-    //   modal.clearCachedProvider();
-    // });
-
-    provider = new ethers.providers.Web3Provider(instance);
-    if (provider) {
-      setWeb3Provider(provider)
-    }
-
-    signer = provider.getSigner();
-    setAddress(await signer.getAddress());
   }
 
   return (
@@ -115,9 +109,13 @@ const Header = () => {
       </div>
       <div className={styles.right}>
         <div id="connectionInfo">
-          {Web3Provider == null
+          {provider == null
             ? <button className={styles.connect} onClick={click}>connect</button>
-            : <Link href='/user'><p className={styles.account}>address:  {address.substr(0, 5) + '...' + address.substr(address.length - 4, address.length)} </p></Link>
+            : 
+            <>
+              <Link href='/user'><p className={styles.account}>address:  {address.substr(0, 5) + '...' + address.substr(address.length - 4, address.length)} </p></Link>
+              <button onClick={disconnectUser}>Disconnect</button>
+            </> 
           }
         </div>
       </div>
