@@ -4,6 +4,9 @@ import styles from '../styles/Nft.module.css'
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { images } from '../public/images/images.js'
+
+import GalleryImage from "./GalleryImage";
+
 import useEmblaCarousel from 'embla-carousel-react'
 import { Thumb } from "./EmblaCarouselThumb";
 // import GeneratePop from './GeneratePop';
@@ -11,8 +14,7 @@ import { Thumb } from "./EmblaCarouselThumb";
 import Close from '../public/Close.png'
 import Generate from './Generate';
 
-const Nft = () => {
-
+const Nft = ({ imageURLs }) => {
     // const menuItems = [
     //     {
     //         name: "image1",
@@ -64,7 +66,12 @@ const Nft = () => {
     return (
         <>
             <div>
-                {}
+                {Object.keys(imageURLs).map((id) => {
+                        return (
+                            <GalleryImage url={imageURLs[id]} key={id} />
+                        )
+                    })
+                }
             </div>
         </>
         // <div id='nft' className={styles["nftPage"]}>

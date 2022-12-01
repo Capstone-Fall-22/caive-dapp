@@ -3,9 +3,47 @@ import styles from '../styles/User.module.css'
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from '../components/providerOption.js';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
 const user = () => {
+    const router = useRouter();
+
+    
+    useEffect(() => {
+        const web3Modal = new Web3Modal({
+            network: "Goerli", // optional
+            cacheProvider: true, // optional
+            providerOptions // required
+        });
+
+        const cachedProviderName = web3Modal.cachedProvider;
+        console.log(cachedProviderName);
+        if (!cachedProviderName) {
+            router.push('/');
+        }
+        // const web3Modal = new Web3Modal({
+        //     network: "Goerli", // optional
+        //     cacheProvider: true, // optional
+        //     providerOptions // required
+        // });
+        
+        // if(web3Modal.cachedProvider){
+        //     console.log(web3Modal.cachedProvider);
+        // }
+
+    }, [])
+    
+
+    
+    // if (!userInfo) {
+    //     router.push('/');
+    // }
+
     const burn = async () => {
+        // Load contract from process.env
         const contractAddress = "0xc356d2c9C68Be126e848739Ec2260D8eCF814184";
+        // Load ABI from file instead
         const abi = [
             {
                 "inputs": [],
@@ -645,14 +683,10 @@ const user = () => {
                 "type": "function"
             }
         ]
-        const web3Modal = new Web3Modal({
-            network: "Goerli", // optional
-            cacheProvider: true, // optional
-            providerOptions // required
-        });
-
+        
         const instance = await web3Modal.connect();
-
+        
+        
         const provider = new ethers.providers.Web3Provider(instance);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(contractAddress, abi, signer)

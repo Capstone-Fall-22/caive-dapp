@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { Icons } from '../public/icons/icons.js';
@@ -7,9 +7,11 @@ import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from './providerOption.js';
 import PopUp from './PopUp.js';
-
+import { useRouter } from 'next/router.js';
 
 const Header = () => {
+  const router = useRouter();
+
   const menuItems = [
     {
       path: "#nft",
@@ -43,21 +45,53 @@ const Header = () => {
   // const toggle = () => setMenuOpen(!menuOpen);
 
   const [Web3Provider, setWeb3Provider] = useState(null);
-  const click = async () => {
+  const [modal, setModal] = useState(null);
+
+  useEffect(() => {
     const web3Modal = new Web3Modal({
       network: "Goerli", // optional
-      cacheProvider: false, // optional
+      cacheProvider: true, // optional
       providerOptions // required
     });
+    setModal(web3Modal);
+    if(web3Modal.cachedProvider){
+      instance = web3Modal.connect().then(() => {
+        provider = new ethers.providers.Web3Provider(instance);
+        if (provider) {
+          setWeb3Provider(provider);
+        }
+      });
 
-    instance = await web3Modal.connect();
+      instance.on("accountsChanged", (accounts) => {
+        modal.clearCachedProvider();
+        setWeb3Provider(null);
+        setAddress('');
+        router.push("/");
+      });
+      
+    }
+  }, []);
+  
+
+  const click = async () => {
+    
+    instance = await modal.connect();
+    // instance.on('accountsChanged', () => {
+    //   modal.clearCachedProvider();
+    // });
+    // instance.on('chainChanged', () => {
+    //   modal.clearCachedProvider();
+    // });
 
     provider = new ethers.providers.Web3Provider(instance);
-    if (provider) setWeb3Provider(provider)
+    if (provider) {
+      setWeb3Provider(provider)
+    }
 
     signer = provider.getSigner();
     setAddress(await signer.getAddress());
   }
+
   return (
     <div className={styles.navBar}>
       <div className={styles.left}>
