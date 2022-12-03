@@ -44,7 +44,7 @@ const user = ({ abi, provider, contractAddress }) => {
         for (let i = 0; i < ownedTokenMetadataURLs.length; i++) {
             const response = await fetch(ownedTokenMetadataURLs[i]);
             const data = await response.json();
-            ownedTokenImageURLs[ownedTokenIds[i]] = data.image.replace('ipfs://', 'https://ipfs.io/ipfs/');
+            ownedTokenImageURLs[ownedTokenIds[i]] = data.image.replace('ipfs://', 'https://nftstorage.link/ipfs/');
         }
 
         return ownedTokenImageURLs;

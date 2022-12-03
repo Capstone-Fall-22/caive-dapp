@@ -47,7 +47,7 @@ export async function getServerSideProps() {
   }
 
   for (const [id, url] of Object.entries(imageURLs)) {
-    imageURLs[id] = url.replace('ipfs://', 'https://ipfs.io/ipfs/');
+    imageURLs[id] = url.replace('ipfs://', 'https://nftstorage.link/ipfs/');
   }
 
   return {
