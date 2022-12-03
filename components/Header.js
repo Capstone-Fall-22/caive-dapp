@@ -64,6 +64,25 @@ const Header = () => {
     }
   }
 
+  useEffect(() => {
+    let web3Modal = new Web3Modal({
+      network: "Goerli", // optional
+      cacheProvider: true, // optional
+      providerOptions // required
+    });
+    setModal(web3Modal);
+    if(web3Modal.cachedProvider){
+      web3Modal.connectTo(web3Modal.cachedProvider).then(async (instance) => {
+          try{
+            setUpProvider(instance);
+          }catch(e){
+            disconnectUser();
+          }
+      });
+    }
+  }, []);
+  
+
   const click = async () => {
     let web3Modal = new Web3Modal({
       network: "Goerli", // optional
