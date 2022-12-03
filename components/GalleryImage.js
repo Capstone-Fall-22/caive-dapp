@@ -5,7 +5,7 @@ import styles from '../styles/GalleryImage.module.css'
 const GalleryImage = ({ url }) => {
   return (
     <div className={styles.galleryImage}>
-        <Image src={url} width={300} height={300} layout="responsive" />
+      <Image src={url} width={300} height={300} layout="responsive" />
     </div>
   )
 }

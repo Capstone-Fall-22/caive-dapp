@@ -6,43 +6,42 @@ import { providerOptions } from '../components/providerOption.js';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import GalleryImage from '../components/GalleryImage';
+import Image from 'next/image';
+import Close from '../public/Close.png'
 
 import fs from 'fs';
 import path from 'path';
 
 const user = ({ abi, provider, contractAddress }) => {
     const router = useRouter();
-
     const [imageURLs, setimageURLs] = useState({})
-
     const getOwnedTokens = async (address, web3Provider) => {
         const contract = new ethers.Contract(contractAddress, abi, web3Provider);
         const numTokensOwned = await contract.balanceOf(address);
 
         let ownedTokens = [];
-        for(let i = 0; i < numTokensOwned; i++){
+        for (let i = 0; i < numTokensOwned; i++) {
             const token = await contract.tokenOfOwnerByIndex(address, i);
             ownedTokens.push(token);
         }
-        
+
         ownedTokens = ownedTokens.map((token) => {
             return Number(token);
         });
-        
+
         ownedTokens = [...new Set(ownedTokens)];
-        
+
         return ownedTokens;
     }
-    
     const getImageURLs = async (address, web3Provider) => {
         let ownedTokenIds = await getOwnedTokens(address, web3Provider);
         let ownedTokenMetadataURLs = [];
-        for(let i = 0; i < ownedTokenIds.length; i++){
+        for (let i = 0; i < ownedTokenIds.length; i++) {
             ownedTokenMetadataURLs.push(`https://storage.googleapis.com/scaipes-metadata/${ownedTokenIds[i]}.json`);
         }
 
         let ownedTokenImageURLs = {};
-        for(let i = 0; i < ownedTokenMetadataURLs.length; i++){
+        for (let i = 0; i < ownedTokenMetadataURLs.length; i++) {
             const response = await fetch(ownedTokenMetadataURLs[i]);
             const data = await response.json();
             ownedTokenImageURLs[ownedTokenIds[i]] = data.image.replace('ipfs://', 'https://ipfs.io/ipfs/');
@@ -50,7 +49,7 @@ const user = ({ abi, provider, contractAddress }) => {
 
         return ownedTokenImageURLs;
     }
-        
+    const [selectedImage, setSelectedImage] = useState();
     // On load, check if the user has connected their wallet already if not,
     // redirect them to the home page. If they have, get their owned tokens
     useEffect(() => {
@@ -64,13 +63,13 @@ const user = ({ abi, provider, contractAddress }) => {
 
         if (!cachedProviderName) {
             router.push('/');
-        }else{
+        } else {
             const web3Modal = new Web3Modal({
                 network: "Goerli", // optional
                 cacheProvider: true, // optional
                 providerOptions // required
             });
-        
+
             web3Modal.connectTo(web3Modal.cachedProvider).then(async (instance) => {
                 const web3Provider = new ethers.providers.Web3Provider(instance);
                 const signer = web3Provider.getSigner();
@@ -83,678 +82,59 @@ const user = ({ abi, provider, contractAddress }) => {
         }
     }, []);
 
-    const burn = async () => {
+    const burn = async (token) => {
         // Load contract from process.env
-        const contractAddress = "0xc356d2c9C68Be126e848739Ec2260D8eCF814184";
+        // const contractAddress = contractAddress;
         // Load ABI from file instead
-        const abi = [
-            {
-                "inputs": [],
-                "stateMutability": "nonpayable",
-                "type": "constructor"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "owner",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "approved",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "Approval",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "owner",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "operator",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "bool",
-                        "name": "approved",
-                        "type": "bool"
-                    }
-                ],
-                "name": "ApprovalForAll",
-                "type": "event"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "to",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "approve",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "burnToken",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "_publicMintOpen",
-                        "type": "bool"
-                    }
-                ],
-                "name": "editMintWindows",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "previousOwner",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "newOwner",
-                        "type": "address"
-                    }
-                ],
-                "name": "OwnershipTransferred",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "account",
-                        "type": "address"
-                    }
-                ],
-                "name": "Paused",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "to",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "Transfer",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "account",
-                        "type": "address"
-                    }
-                ],
-                "name": "Unpaused",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "uint256",
-                        "name": "_tokenId",
-                        "type": "uint256"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "_who",
-                        "type": "address"
-                    }
-                ],
-                "name": "burn",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "uint256",
-                        "name": "_tokenId",
-                        "type": "uint256"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "_who",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "uint256",
-                        "name": "_burnToken",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "mint",
-                "type": "event"
-            },
-            {
-                "inputs": [],
-                "name": "pause",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenBurn",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "publicMint",
-                "outputs": [],
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "renounceOwnership",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "address",
-                        "name": "to",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "safeTransferFrom",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "address",
-                        "name": "to",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "bytes",
-                        "name": "data",
-                        "type": "bytes"
-                    }
-                ],
-                "name": "safeTransferFrom",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "operator",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "approved",
-                        "type": "bool"
-                    }
-                ],
-                "name": "setApprovalForAll",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "address",
-                        "name": "to",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "transferFrom",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "newOwner",
-                        "type": "address"
-                    }
-                ],
-                "name": "transferOwnership",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "unpause",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "_addr",
-                        "type": "address"
-                    }
-                ],
-                "name": "withdraw",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "balanceOf",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "burnerAddresses",
-                "outputs": [
-                    {
-                        "internalType": "address",
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "getApproved",
-                "outputs": [
-                    {
-                        "internalType": "address",
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "getBurntTokenIds",
-                "outputs": [
-                    {
-                        "internalType": "uint256[]",
-                        "name": "",
-                        "type": "uint256[]"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "owner",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "address",
-                        "name": "operator",
-                        "type": "address"
-                    }
-                ],
-                "name": "isApprovedForAll",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "name",
-                "outputs": [
-                    {
-                        "internalType": "string",
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "owner",
-                "outputs": [
-                    {
-                        "internalType": "address",
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "ownerOf",
-                "outputs": [
-                    {
-                        "internalType": "address",
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "paused",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "publicMintOpen",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "bytes4",
-                        "name": "interfaceId",
-                        "type": "bytes4"
-                    }
-                ],
-                "name": "supportsInterface",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "symbol",
-                "outputs": [
-                    {
-                        "internalType": "string",
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "index",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "tokenByIndex",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "owner",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "index",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "tokenOfOwnerByIndex",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "tokenURI",
-                "outputs": [
-                    {
-                        "internalType": "string",
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "totalSupply",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ]
-        
+        // const abi = abi
+        const web3Modal = new Web3Modal({
+            network: "Goerli", // optional
+            cacheProvider: true, // optional
+            providerOptions // required
+        });
         const instance = await web3Modal.connect();
-        
-        
+
+        console.log(selectedImage)
         const provider = new ethers.providers.Web3Provider(instance);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(contractAddress, abi, signer)
-        await contract.publicMint(1)
-        router.push("/user")
+        await contract.burnToken(token)
+        router.reload()
     }
-
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const toggle = () => setModalIsOpen(!modalIsOpen)
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedToken, setSelectedToken] = useState(0);
     return (
         <div className={styles.users}>
             <h3>owned NFTs</h3>
-                {Object.keys(imageURLs).length > 0? 
-                    <div className={styles.ListOwnNft}>
-                        {Object.keys(imageURLs).map((tokenId) => {
-                            return (
-                                <div key={tokenId}>
-                                    {imageURLs[tokenId]} {tokenId}
-                                    <GalleryImage url={imageURLs[tokenId]} />
-                                </div>
-                            )
-                        })}
-                    </div>
+            {Object.keys(imageURLs).length > 0 ?
+                <div className={styles.ListOwnNft}>
+                    {Object.keys(imageURLs).map((tokenId, index) => {
+                        return (
+                            <div key={tokenId} className={styles.OwnNft} onClick={() => { toggle(); setSelectedIndex(index); setSelectedToken(tokenId) }}>
+                                <GalleryImage url={imageURLs[tokenId]} />
+                                {/* {imageURLs[tokenId]} {tokenId} */}
+                                {imageURLs[tokenId].substr(8, 8) + '...' + imageURLs[tokenId].substr(imageURLs[tokenId].length - 5, imageURLs[tokenId].length)}
+                                <br />
+                                {tokenId}
+                            </div>
+                        )
+                    })}
+                    <h1>{Object.keys(imageURLs).length}</h1>
+                </div>
                 :
-                    null
-                }
+                <h1>you do not own any NFTs</h1>
+            }
             <p>move to galery page to see all NFTs</p>
+            <div id='popup' style={{ display: modalIsOpen ? "block" : "none" }} className={styles.pop}>
+                <Image src={Close} alt='close' onClick={toggle} className={styles.Close} height="30px" width="30px" />
+                <button onClick={() => burn(selectedToken)} className={styles.burn} >burn</button>
+                <div >
+                    <Image src={Object.values(imageURLs)[selectedIndex]} className={styles.imageView} width={1080} height={720} alt={selectedIndex} />
+                </div>
+                {/* <GalleryImage url={Object.values(imageURLs)[selectedIndex]} className={styles.imageView} /> */}
+            </div>
         </div>
     )
 }
@@ -764,7 +144,7 @@ export async function getServerSideProps(context) {
     let provider = new ethers.providers.AlchemyProvider("goerli", process.env.ALCHEMY_API_KEY);
     provider = JSON.parse(JSON.stringify(provider))
 
-    return{
+    return {
         props: {
             abi,
             provider,

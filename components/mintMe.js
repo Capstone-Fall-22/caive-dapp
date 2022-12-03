@@ -1,14 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from './providerOption.js';
-import styles from '../styles/generate.module.css';
-import { useRouter } from 'next/router'
-import PopUp from './PopUp.js';
-
-const Generate = ({ abi, contractAddress }) => {
-    const router = useRouter()
+const MintMe = ({ imageToken, abi, contractAddress }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [popupText, setPopupText] = useState("");
 
@@ -22,8 +18,11 @@ const Generate = ({ abi, contractAddress }) => {
         await timeout(time);
         setShowPopup(false);
     }
-    const execute = async () => {
-
+    const router = useRouter()
+    const mint = async (token) => {
+        console.log(token)
+        console.log(abi)
+        console.log(contractAddress)
         const web3Modal = new Web3Modal({
             network: "Goerli", // optional
             cacheProvider: true, // optional
@@ -43,7 +42,7 @@ const Generate = ({ abi, contractAddress }) => {
         const signer = provider.getSigner();
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
-            await contract.publicMint(0, { value: ethers.utils.parseEther("0.01") })
+            await contract.publicMint(token, { value: ethers.utils.parseEther("0.01") })
         } catch (e) {
             displayPopup(e.message.substring(0, 100), 5000);
             return;
@@ -54,9 +53,13 @@ const Generate = ({ abi, contractAddress }) => {
     }
     return (
         <>
-            {showPopup ? <PopUp text={popupText} /> : null}
-            <button onClick={() => { execute() }} className={styles.Generate}>Generate</button>
+            {/* mint imageToken */}
+            <button className="mintButton" onClick={() => {
+                mint(imageToken)
+            }}>Mint</button>
+
         </>
     )
 }
-export default Generate
+
+export default MintMe
