@@ -12,7 +12,7 @@ export const Thumb = ({ selected, onClick, imgSrc, name }) => (
             className={`${styles["embla__slide__inner"]} ${styles["embla__slide__inner--thumb"]}`}
             type="button"
         >
-            <Image className={styles["embla__slide__thumbnail"]} src={imgSrc} alt={name} />
+            <Image className={styles["embla__slide__thumbnail"]} src={imgSrc} alt={name} width={1080} height={720} layout="responsive" />
         </button>
     </div>
 );

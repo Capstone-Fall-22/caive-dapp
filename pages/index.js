@@ -9,16 +9,18 @@ import fs from 'fs'
 import path from 'path'
 import { ethers } from 'ethers';
 
-export default function Home({ imageURLs }) {
-  console.log(imageURLs);
-  
+
+export default function Home({ imageURLs, abi, contractAddress }) {
+  // console.log(imageURLs);
+  // console.log(abi);
+
   return (
     <div className={styles.container}>
-      <Nft imageURLs={imageURLs} />
+      <Nft imageURLs={imageURLs} abi={abi} contractAddress={contractAddress} />
       <Tech />
       <About />
       <Timeline />
-      <Generate />
+      <Generate abi={abi} contractAddress={contractAddress} />
     </div>
   )
 }
@@ -31,7 +33,7 @@ export async function getServerSideProps() {
   const provider = new ethers.providers.AlchemyProvider("goerli", process.env.ALCHEMY_API_KEY);
   const contract = new ethers.Contract(process.env.CONTRACT_ADDRESS, abi, provider);
   const burnedIds = await contract.getBurntTokenIds();
-
+  const contractAddress = process.env.CONTRACT_ADDRESS;
   let burnedTokenMetadataURLs = {};
   burnedIds.map((id) => {
     burnedTokenMetadataURLs[id] = `https://storage.googleapis.com/scaipes-metadata/${id}.json`;
@@ -50,8 +52,11 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      imageURLs
+      imageURLs,
       // contract
+      abi,
+      contractAddress
+
     }
   }
 }

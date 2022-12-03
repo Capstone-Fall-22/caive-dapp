@@ -1,45 +1,57 @@
 .users{
     padding-top: 7.5vh;
     /* height: 87.7vh; */
+    min-height: 86vh;
 }
 .ListOwnNft{
     margin-top: 15vh;
-    gap: 20px;
+    /* gap: 10px; */
     display: grid;
 }
 /* for resize purposes */
 @media (min-width: 200px) {
     .ListOwnNft {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 2fr);
     }
   }
   @media (min-width: 600px) {
     .ListOwnNft {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 2fr);
     }
   }
   @media (min-width: 1000px) {
     .ListOwnNft {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 2fr);
     }
   }@media (min-width: 1300px) {
     .ListOwnNft {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, 2fr);
     }
   }
 .OwnNft{
     border-radius: 10px;
-    width: 100%;
-    margin-bottom: 20px;
+    width: 100px;
     cursor: pointer;
-    background-color: white;
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5vh 0;
+
 }
 .users p{
     text-align: center;
     margin-top: 10vh;
+}
+.pop{
+    position: fixed;
+    margin-top: 7vh;
+    top:20vh;
+    left:30vw;
+    /* width: 40vw; */
+    /* height: 50vh; */
+    background-color: aqua;
+    border-radius: 7px;
+    z-index: 5;
+}
+.burn{
+    float: right;
+    font-size: larger;
+    margin-top: 3px;
+    margin-right: 3px;
 }

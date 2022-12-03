@@ -11,9 +11,9 @@ function MyApp({ Component, pageProps }) {
   // const [Web3Provider, setWeb3Provider] = useState(null);
 
   // const [modal, setModal] = useState(null);
-  
-  
-  
+
+
+
   // useEffect(() => {
   //   const web3Modal = new Web3Modal({
   //     network: "Goerli", // optional
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
 
   //   let instance = web3Modal.connect().then(() => {
   //       let provider = new ethers.providers.Web3Provider(instance);
-    
+
   //       if (provider) {
   //         setWeb3Provider(provider);
   //       }
