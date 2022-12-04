@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from './providerOption.js';
+import styles from '../styles/Nft.module.css'
 const MintMe = ({ imageToken, abi, contractAddress }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [popupText, setPopupText] = useState("");
@@ -53,8 +54,7 @@ const MintMe = ({ imageToken, abi, contractAddress }) => {
     }
     return (
         <>
-            {/* mint imageToken */}
-            <button className="mintButton" onClick={() => {
+            <button className={styles.mintButton} onClick={() => {
                 mint(imageToken)
             }}>Mint</button>
 

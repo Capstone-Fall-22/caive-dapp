@@ -99,15 +99,16 @@ const Nft = ({ imageURLs, abi, contractAddress }) => {
             </div>
             <div className={styles.list} style={{ display: listOpen ? "block" : "none" }}>
                 <div className={styles.listContainer} >
-                    {Object.keys(imageURLs).map((id) => {
-                        return (
-                            <div key={id} className={styles.listItem}>
-                                <div className={styles.listItemInner} onClick={toggle}>
-                                    {/* <Image src={imageURLs[id]} className={`${styles.listItemImg}`} onClick={toggle} /> */}
-                                    <GalleryImage url={imageURLs[id]} className={`${styles.listItemImg}`} />
+                    {Object.keys(imageURLs).map((id, index) => {
+                        if (index < 10) {
+                            return (
+                                <div key={id} className={styles.listItem}>
+                                    <div className={styles.listItemInner} onClick={toggle}>
+                                        <Image src={imageURLs[id]} className={`${styles.listItemImg}`} width={1080} height={720} onClick={toggle} alt={id} />
+                                    </div>
                                 </div>
-                            </div>
-                        )
+                            )
+                        }
                     })}
                 </div>
             </div>

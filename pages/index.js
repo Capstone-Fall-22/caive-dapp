@@ -11,9 +11,6 @@ import { ethers } from 'ethers';
 
 
 export default function Home({ imageURLs, abi, contractAddress }) {
-  // console.log(imageURLs);
-  // console.log(abi);
-
   return (
     <div className={styles.container}>
       <Nft imageURLs={imageURLs} abi={abi} contractAddress={contractAddress} />
