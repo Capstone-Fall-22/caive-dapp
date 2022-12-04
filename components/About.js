@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import about from './Json/About.json'
 import styles from '../styles/About.module.css'
 
 let team = [

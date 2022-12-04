@@ -1,5 +1,5 @@
 .nftPage{
-    height: 100vh;
+    min-height: 100vh;
     padding-top: 7.5vh;
     display: flex;
     flex-direction: column;
@@ -125,13 +125,17 @@
 }
 .list{
   gap: 2vw;
-  margin-top: 5vh;
+  margin: 5vh 0;
+
 }
 .listItem{
-  width: 30vw;
-  border-radius: 10px;
   margin-bottom: 2vw;
-  background-color: white;
+}
+.listItemInner{
+  max-width: 400px;
+}
+.listItemImg{
+  border-radius: 10px;
 }
 
 @media(min-width: 300px) {
@@ -160,7 +164,6 @@
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: var(--height);
   cursor: pointer;
-  /* margin-bottom: 5vh; */
   margin-top: 20px;
   left:40vw;
 }
@@ -237,4 +240,10 @@
 
 .toggle input:checked~.labels::before {
   opacity: 1;
+}
+.mintButton{
+  float: right;
+  font-size: larger;
+  margin-top: 3px;
+  margin-right: 3px;
 }

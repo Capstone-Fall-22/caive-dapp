@@ -73,7 +73,6 @@ const Timeline = () => {
                     return (
                         <div key={index} className={styles.timelineMap}>
                             {index % 2 === 0 ?
-                                //when mouse is over div, change opacity to 0
                                 <div key={index} className={`${styles["container"]} ${styles["left"]}`}
                                     onMouseOver={(e) => {
                                         e.target.style.opacity = 1
