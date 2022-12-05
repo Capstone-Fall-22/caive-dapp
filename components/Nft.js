@@ -90,13 +90,18 @@ const Nft = ({ imageURLs, abi, contractAddress }) => {
                     </div>
                 </div>
             </div>
-            <div id='popup' style={{ display: modalIsOpen ? "block" : "none" }} className={styles.pop}>
-                <Image src={Close} alt='close' onClick={toggle} className={styles.Close} height="30vh" width="30vw" />
-                <MintMe imageToken={imageToken} abi={abi} contractAddress={contractAddress} />
-                <div>
-                    <Image src={Object.values(imageURLs)[selectedIndex]} width={1080} height={720} className={styles.imageView} alt={selectedIndex} />
-                </div>
-            </div>
+            {
+                modalIsOpen ?
+                    <div id='popup' style={{ display: modalIsOpen ? "block" : "none" }} className={styles.pop}>
+                        <Image src={Close} alt='close' onClick={toggle} className={styles.Close} height="30vh" width="30vw" />
+                        <MintMe imageToken={imageToken} abi={abi} contractAddress={contractAddress} />
+                        <div>
+                            <Image src={Object.values(imageURLs)[selectedIndex]} width={1080} height={720} className={styles.imageView} alt={selectedIndex} />
+                        </div>
+                    </div>
+                :
+                    null
+            }
             <div className={styles.list} style={{ display: listOpen ? "block" : "none" }}>
                 <div className={styles.listContainer} >
                     {Object.keys(imageURLs).map((id, index) => {
