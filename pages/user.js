@@ -12,9 +12,11 @@ import Close from '../public/Close.png'
 import fs from 'fs';
 import path from 'path';
 
-const user = ({ abi, provider, contractAddress }) => {
+const User = ({ abi, provider, contractAddress }) => {
+
     const router = useRouter();
-    const [imageURLs, setimageURLs] = useState({})
+    const [imageURLs, setimageURLs] = useState({});
+
     const getOwnedTokens = async (address, web3Provider) => {
         const contract = new ethers.Contract(contractAddress, abi, web3Provider);
         const numTokensOwned = await contract.balanceOf(address);
@@ -49,6 +51,7 @@ const user = ({ abi, provider, contractAddress }) => {
 
         return ownedTokenImageURLs;
     }
+
     const [selectedImage, setSelectedImage] = useState();
     // On load, check if the user has connected their wallet already if not,
     // redirect them to the home page. If they have, get their owned tokens
@@ -69,6 +72,7 @@ const user = ({ abi, provider, contractAddress }) => {
                 cacheProvider: true, // optional
                 providerOptions // required
             });
+            
 
             web3Modal.connectTo(web3Modal.cachedProvider).then(async (instance) => {
                 const web3Provider = new ethers.providers.Web3Provider(instance);
@@ -94,7 +98,6 @@ const user = ({ abi, provider, contractAddress }) => {
         });
         const instance = await web3Modal.connect();
 
-        console.log(selectedImage)
         const provider = new ethers.providers.Web3Provider(instance);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(contractAddress, abi, signer)
@@ -142,7 +145,7 @@ const user = ({ abi, provider, contractAddress }) => {
 export async function getServerSideProps(context) {
     const abi = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'json', `${process.env.CONTRACT_ADDRESS}.json`), 'utf8')).abi;
     let provider = new ethers.providers.AlchemyProvider("goerli", process.env.ALCHEMY_API_KEY);
-    provider = JSON.parse(JSON.stringify(provider))
+    provider = JSON.parse(JSON.stringify(provider));
 
     return {
         props: {
@@ -153,4 +156,4 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default user
+export default User
