@@ -11,9 +11,6 @@ import { ethers } from 'ethers';
 
 
 export default function Home({ imageURLs, abi, contractAddress }) {
-  // console.log(imageURLs);
-  // console.log(abi);
-
   return (
     <div className={styles.container}>
       <Nft imageURLs={imageURLs} abi={abi} contractAddress={contractAddress} />
@@ -47,7 +44,7 @@ export async function getServerSideProps() {
   }
 
   for (const [id, url] of Object.entries(imageURLs)) {
-    imageURLs[id] = url.replace('ipfs://', 'https://ipfs.io/ipfs/');
+    imageURLs[id] = url.replace('ipfs://', 'https://nftstorage.link/ipfs/');
   }
 
   return {

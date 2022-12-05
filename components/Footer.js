@@ -23,7 +23,7 @@ const socialItems = [
   {
     name: "Opensea",
     image: socials.opensea,
-    link: "https://testnets.opensea.io/"
+    link: "https://testnets.opensea.io/collection/scaipes-oobkvrdhjv"
   }
 ]
 
