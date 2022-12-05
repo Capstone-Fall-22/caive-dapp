@@ -130,14 +130,19 @@ const User = ({ abi, provider, contractAddress }) => {
                 <h1>you do not own any NFTs</h1>
             }
             <p>move to galery page to see all NFTs</p>
-            <div id='popup' style={{ display: modalIsOpen ? "block" : "none" }} className={styles.pop}>
-                <Image src={Close} alt='close' onClick={toggle} className={styles.Close} height="30px" width="30px" />
-                <button onClick={() => burn(selectedToken)} className={styles.burn} >burn</button>
-                <div >
-                    <Image src={Object.values(imageURLs)[selectedIndex]} className={styles.imageView} width={1080} height={720} alt={selectedIndex} />
-                </div>
-                {/* <GalleryImage url={Object.values(imageURLs)[selectedIndex]} className={styles.imageView} /> */}
-            </div>
+            {
+                modalIsOpen ?
+                    <div id='popup' style={{ display: modalIsOpen ? "block" : "none" }} className={styles.pop}>
+                        <Image src={Close} alt='close' onClick={toggle} className={styles.Close} height="30px" width="30px" />
+                        <button onClick={() => burn(selectedToken)} className={styles.burn} >burn</button>
+                        <div >
+                            <Image src={Object.values(imageURLs)[selectedIndex]} className={styles.imageView} width={1080} height={720} alt={selectedIndex} />
+                        </div>
+                    </div>
+                :
+                null
+
+            }
         </div>
     )
 }
