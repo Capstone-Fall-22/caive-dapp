@@ -43,8 +43,8 @@
     margin-top: 7vh;
     top:20vh;
     left:30vw;
-    /* width: 40vw; */
-    /* height: 50vh; */
+    width: 40vw;
+    max-height: 720px;
     background-color: aqua;
     border-radius: 7px;
     z-index: 5;
