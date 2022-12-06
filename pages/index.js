@@ -11,9 +11,10 @@ import { ethers } from 'ethers';
 
 
 export default function Home({ imageURLs, abi, contractAddress }) {
+  console.log(Object.keys(imageURLs).length);
   return (
     <div className={styles.container}>
-      {imageURLs.length > 0?
+      {Object.keys(imageURLs).length > 0?
         <Nft imageURLs={imageURLs} abi={abi} contractAddress={contractAddress} />
         :
         <>No NFTs have been minted, be the first to generate!</>
