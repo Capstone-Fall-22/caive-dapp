@@ -13,7 +13,11 @@ import { ethers } from 'ethers';
 export default function Home({ imageURLs, abi, contractAddress }) {
   return (
     <div className={styles.container}>
-      <Nft imageURLs={imageURLs} abi={abi} contractAddress={contractAddress} />
+      {imageURLs.length > 0?
+        <Nft imageURLs={imageURLs} abi={abi} contractAddress={contractAddress} />
+        :
+        <>No NFTs have been minted, be the first to generate!</>
+      }
       <Tech />
       <About />
       <Timeline />
