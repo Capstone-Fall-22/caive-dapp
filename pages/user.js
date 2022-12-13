@@ -52,7 +52,6 @@ const User = ({ abi, provider, contractAddress }) => {
         return ownedTokenImageURLs;
     }
 
-    const [selectedImage, setSelectedImage] = useState();
     // On load, check if the user has connected their wallet already if not,
     // redirect them to the home page. If they have, get their owned tokens
     useEffect(() => {
@@ -72,7 +71,7 @@ const User = ({ abi, provider, contractAddress }) => {
                 cacheProvider: true, // optional
                 providerOptions // required
             });
-            
+
 
             web3Modal.connectTo(web3Modal.cachedProvider).then(async (instance) => {
                 const web3Provider = new ethers.providers.Web3Provider(instance);
@@ -87,10 +86,6 @@ const User = ({ abi, provider, contractAddress }) => {
     }, []);
 
     const burn = async (token) => {
-        // Load contract from process.env
-        // const contractAddress = contractAddress;
-        // Load ABI from file instead
-        // const abi = abi
         const web3Modal = new Web3Modal({
             network: "Goerli", // optional
             cacheProvider: true, // optional
@@ -139,8 +134,8 @@ const User = ({ abi, provider, contractAddress }) => {
                             <Image src={Object.values(imageURLs)[selectedIndex]} className={styles.imageView} width={1080} height={720} alt={selectedIndex} />
                         </div>
                     </div>
-                :
-                null
+                    :
+                    null
 
             }
         </div>

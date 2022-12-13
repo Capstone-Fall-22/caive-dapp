@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from '../styles/Tech.module.css'
+//technical responsibility 
 const technologies = [
     {
         "title": "Web Scraping",

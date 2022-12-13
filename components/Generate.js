@@ -15,7 +15,7 @@ const Generate = ({ abi, contractAddress }) => {
     const timeout = (delay) => {
         return new Promise(res => setTimeout(res, delay));
     }
-
+    //show popup for error if user cancels or unable to generate
     const displayPopup = async (text, time) => {
         setPopupText(text);
         setShowPopup(true);

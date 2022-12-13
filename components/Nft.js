@@ -7,7 +7,11 @@ import { Thumb } from "./EmblaCarouselThumb";
 import Close from '../public/Close.png'
 import MintMe from "./mintMe";
 
+//NFT component takes imageURL to display the images in carousel or grid
+// abi and contract address to allow mint function
+//mint function is not efficent because its a copy of generate component but allows mint of tracked image url
 const Nft = ({ imageURLs, abi, contractAddress }) => {
+    //needed for embla carousal from embla js
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false });
     const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({
@@ -35,7 +39,7 @@ const Nft = ({ imageURLs, abi, contractAddress }) => {
         onSelect();
         embla.on("select", onSelect);
     }, [embla, onSelect]);
-
+    //end of embla requirement
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const toggle = () => setModalIsOpen(!modalIsOpen)
@@ -45,6 +49,7 @@ const Nft = ({ imageURLs, abi, contractAddress }) => {
     return (
         <div id='nft' className={styles["nftPage"]}>
             <h1 className={styles.pageTitle}>A Living Art Exhibit</h1>
+            {/* grid / carousal toggle button */}
             <div>
                 <label className={styles["toggle"]} >
                     <input type="checkbox" onClick={toggleList} />
@@ -52,6 +57,7 @@ const Nft = ({ imageURLs, abi, contractAddress }) => {
                     <span className={styles["labels"]} data-on="gallery" data-off="grid"></span>
                 </label>
             </div>
+            {/* carousel */}
             <div className={styles.carousel} style={{ display: listOpen ? "none" : "block" }}>
                 <div className={`${styles["embla"]}`}>
                     <div className={styles["embla__viewport"]} ref={mainViewportRef}>
@@ -90,6 +96,7 @@ const Nft = ({ imageURLs, abi, contractAddress }) => {
                     </div>
                 </div>
             </div>
+            {/* popup to confirm mint of particular image */}
             {
                 modalIsOpen ?
                     <div id='popup' style={{ display: modalIsOpen ? "block" : "none" }} className={styles.pop}>
@@ -99,9 +106,10 @@ const Nft = ({ imageURLs, abi, contractAddress }) => {
                             <Image src={Object.values(imageURLs)[selectedIndex]} width={1080} height={720} className={styles.imageView} alt={selectedIndex} />
                         </div>
                     </div>
-                :
+                    :
                     null
             }
+            {/* grid */}
             <div className={styles.list} style={{ display: listOpen ? "block" : "none" }}>
                 <div className={styles.listContainer} >
                     {Object.keys(imageURLs).map((id, index) => {

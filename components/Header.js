@@ -45,7 +45,7 @@ const Header = () => {
   const [popUpText, setPopUpText] = useState('');
 
   const disconnectUser = async () => {
-    if(modal){
+    if (modal) {
       modal.clearCachedProvider();
     }
     modal = null;
@@ -53,17 +53,18 @@ const Header = () => {
     setAddress('');
     router.push("/");
   };
-  
+
   const setUpProvider = async (instance) => {
     let walletProvider = new ethers.providers.Web3Provider(instance);
-    
-    if(walletProvider){
+
+    if (walletProvider) {
       signer = walletProvider.getSigner();
       setAddress(await signer.getAddress());
       setProvider(walletProvider);
     }
   }
-
+  //create a connection wiiht web3Modal to allow multi wallet connection
+  //cache the user connection even if they navigation out
   useEffect(() => {
     let web3Modal = new Web3Modal({
       network: "Goerli", // optional
@@ -71,17 +72,17 @@ const Header = () => {
       providerOptions // required
     });
     setModal(web3Modal);
-    if(web3Modal.cachedProvider){
+    if (web3Modal.cachedProvider) {
       web3Modal.connectTo(web3Modal.cachedProvider).then(async (instance) => {
-          try{
-            setUpProvider(instance);
-          }catch(e){
-            disconnectUser();
-          }
+        try {
+          setUpProvider(instance);
+        } catch (e) {
+          disconnectUser();
+        }
       });
     }
   }, []);
-  
+
 
   const click = async () => {
     let web3Modal = new Web3Modal({
@@ -90,17 +91,17 @@ const Header = () => {
       providerOptions // required
     });
     setModal(web3Modal);
-    if(web3Modal.cachedProvider){
+    if (web3Modal.cachedProvider) {
       web3Modal.connectTo(web3Modal.cachedProvider).then(async (instance) => {
-          try{
-            setUpProvider(instance);
-          }catch(e){
-            disconnectUser();
-          }
+        try {
+          setUpProvider(instance);
+        } catch (e) {
+          disconnectUser();
+        }
       });
-    }else{
+    } else {
       let instance = await web3Modal.connect();
-      
+
       setUpProvider(instance);
     }
   }
@@ -130,15 +131,15 @@ const Header = () => {
         <div id="connectionInfo">
           {provider == null
             ? <button className={styles.connect} onClick={click}>connect</button>
-            : 
+            :
             <>
               <Link href='/user'><p className={styles.account}>address:  {address.substr(0, 5) + '...' + address.substr(address.length - 4, address.length)} </p></Link>
               <button onClick={disconnectUser}>Disconnect</button>
-            </> 
+            </>
           }
         </div>
       </div>
-      {showPopup? <PopUp text={popUpText} /> : null }
+      {showPopup ? <PopUp text={popUpText} /> : null}
     </div>
   )
 }
